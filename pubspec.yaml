@@ -1,0 +1,21 @@
+name: faabul_color_picker
+description: A versatile color selection widget with Material, white, black, and hex support, including null/deselect options.
+version: 0.0.1
+homepage: https://github.com/yomio/faabul_color_picker
+repository: https://github.com/yomio/faabul_color_picker.git
+issue_tracker: https://github.com/yomio/faabul_color_picker/issues
+
+environment:
+  sdk: '>=3.1.1 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:

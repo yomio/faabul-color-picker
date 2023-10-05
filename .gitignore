@@ -25,3 +25,6 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+.idea/**
+faabul_color_picker.code-workspace
+faabul_color_picker.iml
