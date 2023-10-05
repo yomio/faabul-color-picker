@@ -1,6 +1,6 @@
 # faabul_color_picker
 
-![Sample image](doc/sample.png)
+![Sample image](https://raw.githubusercontent.com/yomio/faabul_color_picker/main/doc/sample.png)
 faabul_color_picker is developed and used by [Faabul Live Quizzes][faabul_link]
 
 ## Getting Started

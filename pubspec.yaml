@@ -1,6 +1,6 @@
 name: faabul_color_picker
 description: A versatile color selection widget with Material, white, black, and hex support, including null/deselect options.
-version: 0.0.1
+version: 1.0.1
 homepage: https://github.com/yomio/faabul_color_picker
 repository: https://github.com/yomio/faabul_color_picker.git
 issue_tracker: https://github.com/yomio/faabul_color_picker/issues
