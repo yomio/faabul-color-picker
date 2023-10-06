@@ -53,7 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = ThemeData.from(
-      colorScheme: ColorScheme.fromSeed(seedColor: _selectedColor ?? Colors.purple),
+      colorScheme:
+          ColorScheme.fromSeed(seedColor: _selectedColor ?? Colors.purple),
       useMaterial3: true,
     );
     return Theme(
@@ -83,7 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 FaabulColorSample(color: _selectedColor!),
                               ],
                             ),
-                          FilledButton(onPressed: _handlePickColor, child: const Text('Pick a color')),
+                          FilledButton(
+                              onPressed: _handlePickColor,
+                              child: const Text('Pick a color')),
                         ],
                       ),
                     ),
@@ -91,7 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   SwitchListTile.adaptive(
                     title: const Text('Allow unselect button'),
                     value: _allowUnselectButton,
-                    onChanged: (value) => setState(() => _allowUnselectButton = value),
+                    onChanged: (value) =>
+                        setState(() => _allowUnselectButton = value),
                   ),
                   SwitchListTile.adaptive(
                     title: const Text('Custom colors'),
