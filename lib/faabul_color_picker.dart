@@ -223,15 +223,20 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final FaabulColorShades? selectedColorShade =
-        widget.colors.where((colorShade) => colorShade.contains(_selected)).firstOrNull;
-    final selectedIcon = widget.selectedIcon ?? Icon(Icons.check, size: widget.colorSampleSize * 0.8);
-    final shadeSelectedIcon = widget.shadeSelectedIcon ?? Icon(Icons.expand_more, size: widget.colorSampleSize * 0.8);
-    final unselectButtonIcon =
-        widget.unselectButtonIcon ?? Icon(Icons.format_color_reset_outlined, size: widget.colorSampleSize * 0.8);
+    final FaabulColorShades? selectedColorShade = widget.colors
+        .where((colorShade) => colorShade.contains(_selected))
+        .firstOrNull;
+    final selectedIcon = widget.selectedIcon ??
+        Icon(Icons.check, size: widget.colorSampleSize * 0.8);
+    final shadeSelectedIcon = widget.shadeSelectedIcon ??
+        Icon(Icons.expand_more, size: widget.colorSampleSize * 0.8);
+    final unselectButtonIcon = widget.unselectButtonIcon ??
+        Icon(Icons.format_color_reset_outlined,
+            size: widget.colorSampleSize * 0.8);
 
-    final showShades =
-        selectedColorShade != null && selectedColorShade.shades != null && selectedColorShade.shades!.isNotEmpty;
+    final showShades = selectedColorShade != null &&
+        selectedColorShade.shades != null &&
+        selectedColorShade.shades!.isNotEmpty;
     final isUnselected = _selected == null;
 
     return SingleChildScrollView(
@@ -250,12 +255,14 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
                     tooltip: widget.showColorTooltips ? colorShade.name : null,
                     onSelected: _handleSelected,
                     isSelected: selectedColorShade != null &&
-                        _FaabulColorUtilities.colorEquals(colorShade.color, selectedColorShade.color),
+                        _FaabulColorUtilities.colorEquals(
+                            colorShade.color, selectedColorShade.color),
                     size: widget.colorSampleSize,
-                    selectedIcon:
-                        selectedColorShade == null || _FaabulColorUtilities.colorEquals(colorShade.color, _selected!)
-                            ? selectedIcon
-                            : shadeSelectedIcon,
+                    selectedIcon: selectedColorShade == null ||
+                            _FaabulColorUtilities.colorEquals(
+                                colorShade.color, _selected!)
+                        ? selectedIcon
+                        : shadeSelectedIcon,
                   ),
                 if (widget.allowUnselectButton)
                   FaabulColorButton(
@@ -277,7 +284,8 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
                     FaabulColorButton(
                       color: color,
                       onSelected: _handleSelected,
-                      isSelected: _selected != null && _FaabulColorUtilities.colorEquals(color, _selected!),
+                      isSelected: _selected != null &&
+                          _FaabulColorUtilities.colorEquals(color, _selected!),
                       selectedIcon: selectedIcon,
                     ),
                 ],
@@ -294,7 +302,9 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
                       height: widget.colorSampleSize,
                       duration: widget.animationsDuration,
                       curve: widget.animationsCurve,
-                      decoration: BoxDecoration(color: _selected, borderRadius: BorderRadius.circular(4))),
+                      decoration: BoxDecoration(
+                          color: _selected,
+                          borderRadius: BorderRadius.circular(4))),
                   const SizedBox(width: 16),
                   _buildInput(context),
                 ],
@@ -308,7 +318,9 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
 
   void _updateState(Color? color) {
     setState(() => _selected = color);
-    final webColor = color == null ? null : _FaabulColorUtilities.toWebColor(color).toUpperCase();
+    final webColor = color == null
+        ? null
+        : _FaabulColorUtilities.toWebColor(color).toUpperCase();
     _colorInputController.text = webColor ?? '';
   }
 
@@ -336,7 +348,8 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
   }
 
   void _colorInputListener() {
-    final color = _FaabulColorUtilities.tryParseAsColor(_colorInputController.text);
+    final color =
+        _FaabulColorUtilities.tryParseAsColor(_colorInputController.text);
     if (color == null) {
       setState(() => _colorInputValid = false);
     } else {
@@ -385,15 +398,19 @@ class FaabulColorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final focusColor = (color ?? Theme.of(context).colorScheme.outlineVariant).withOpacity(0.3);
-    final highLightColor = (color ?? Theme.of(context).colorScheme.outlineVariant).withOpacity(0.7);
+    final focusColor = (color ?? Theme.of(context).colorScheme.outlineVariant)
+        .withOpacity(0.3);
+    final highLightColor =
+        (color ?? Theme.of(context).colorScheme.outlineVariant)
+            .withOpacity(0.7);
 
     return IconButton(
       hoverColor: focusColor,
       focusColor: focusColor,
       highlightColor: highLightColor,
       icon: FaabulColorSample(color: color, size: size, icon: icon),
-      selectedIcon: FaabulColorSample(color: color, size: size, icon: selectedIcon),
+      selectedIcon:
+          FaabulColorSample(color: color, size: size, icon: selectedIcon),
       onPressed: () => onSelected(color),
       tooltip: tooltip,
       isSelected: isSelected,
@@ -434,19 +451,24 @@ class FaabulColorSample extends StatelessWidget {
           color: color,
           borderRadius: BorderRadius.all(Radius.circular(size * 0.5))),
       child: icon != null
-          ? IconTheme(data: _iconThemeOver(color ?? Theme.of(context).colorScheme.surface), child: icon!)
+          ? IconTheme(
+              data: _iconThemeOver(
+                  color ?? Theme.of(context).colorScheme.surface),
+              child: icon!)
           : null,
     );
   }
 
   IconThemeData _iconThemeOver(Color color) {
-    return IconThemeData(color: color.computeLuminance() > 0.3 ? Colors.black : Colors.white);
+    return IconThemeData(
+        color: color.computeLuminance() > 0.3 ? Colors.black : Colors.white);
   }
 }
 
 /// Utility functions for colors
 abstract class _FaabulColorUtilities {
-  static final colorParser = RegExp(r"^#([0-9A-Fa-f]{6}([0-9A-Fa-f][0-9A-Fa-f])?)$");
+  static final colorParser =
+      RegExp(r"^#([0-9A-Fa-f]{6}([0-9A-Fa-f][0-9A-Fa-f])?)$");
 
   static colorEquals(Color a, Color b) => a.value == b.value;
 
@@ -458,7 +480,9 @@ abstract class _FaabulColorUtilities {
   static Color parseAsColor(String text) {
     final match = colorParser.firstMatch(text)?.group(1);
     if (match == null) {
-      throw FormatException("Supplied color has invalid format. Expected '#FF0088FF' or '#0088FF'", text);
+      throw FormatException(
+          "Supplied color has invalid format. Expected '#FF0088FF' or '#0088FF'",
+          text);
     }
     return Color(int.parse("0x${match.length == 8 ? match : 'FF$match'}"));
   }
