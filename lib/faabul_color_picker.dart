@@ -1,6 +1,7 @@
 library faabul_color_picker;
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 /// Shows a dialog with the color picker
 ///
@@ -318,9 +319,7 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
 
   void _updateState(Color? color) {
     setState(() => _selected = color);
-    final webColor = color == null
-        ? null
-        : _FaabulColorUtilities.toWebColor(color).toUpperCase();
+    final webColor = color == null ? null : ColorToHex(color).toString();
     _colorInputController.text = webColor ?? '';
   }
 
@@ -467,25 +466,7 @@ class FaabulColorSample extends StatelessWidget {
 
 /// Utility functions for colors
 abstract class _FaabulColorUtilities {
-  static final colorParser =
-      RegExp(r"^#([0-9A-Fa-f]{6}([0-9A-Fa-f][0-9A-Fa-f])?)$");
-
   static colorEquals(Color a, Color b) => a.value == b.value;
-
-  /// Parses a web color
-  ///
-  /// Accepted formats are `#FF0088FF` (with alpha) and `#0088FF` (without alpha), case insensitive
-  /// Throws [FormatException] on invalid format
-  /// See also [tryParseAsColor]
-  static Color parseAsColor(String text) {
-    final match = colorParser.firstMatch(text)?.group(1);
-    if (match == null) {
-      throw FormatException(
-          "Supplied color has invalid format. Expected '#FF0088FF' or '#0088FF'",
-          text);
-    }
-    return Color(int.parse("0x${match.length == 8 ? match : 'FF$match'}"));
-  }
 
   /// Parses a web color
   ///
@@ -494,20 +475,10 @@ abstract class _FaabulColorUtilities {
   /// See also [parseAsColor]
   static Color? tryParseAsColor(String text) {
     try {
-      return parseAsColor(text);
+      return HexColor(text);
     } on FormatException catch (_) {
       return null;
     }
-  }
-
-  /// Returns web string representation of [color], such as `#004488DD`
-  static String toWebColor(Color color) {
-    String alpha = color.alpha.toRadixString(16).padLeft(2, '0');
-    String red = color.red.toRadixString(16).padLeft(2, '0');
-    String green = color.green.toRadixString(16).padLeft(2, '0');
-    String blue = color.blue.toRadixString(16).padLeft(2, '0');
-
-    return '#$alpha$red$green$blue';
   }
 }
 
