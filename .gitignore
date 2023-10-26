@@ -28,3 +28,4 @@ doc/api/
 .idea/**
 faabul_color_picker.code-workspace
 faabul_color_picker.iml
+.vscode/settings.json
