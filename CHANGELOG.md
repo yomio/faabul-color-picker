@@ -1,3 +1,8 @@
+## 1.1.0
+
+* Package now depends on [faabul_color_conversion](https://pub.dev/packages/faabul_color_conversion) for String / Color conversions
+* Improved documentation
+
 ## 1.0.2
 
 * Fixed code formatting

@@ -1,3 +1,7 @@
+/// Package that provides a simple color picker for Flutter
+///
+/// Call `showColorPickerDialog()` to show the color picker dialog and await the result.
+
 library faabul_color_picker;
 
 import 'package:faabul_color_conversion/faabul_color_conversion.dart';
