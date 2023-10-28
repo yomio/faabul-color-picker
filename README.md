@@ -5,7 +5,7 @@ faabul_color_picker is developed and used by [Faabul Live Quizzes][faabul_link]
 
 ## Getting Started
 
-Call `showColorPickerDialog` to show the color picker dialog and await the result.
+Call `showColorPickerDialog()` to show the color picker dialog and await the result.
 
 ```dart
 final color = await showColorPickerDialog(context: context);
@@ -53,8 +53,8 @@ final color = await showColorPickerDialog(
 
 `FaabulColorPicker` is the widget that shows inside the `showColorPickerDialog`. It can be used directly if you want to select the color in a different way.
 
-`FaabulColorButton` is the button used to represent an individual `Color`.
+`FaabulColorButton` is the button widget used to represent an individual `Color`.
 
-`FaabulColorSample` presents the `Color` in a circle.
+`FaabulColorSample` is a widget that presents the `Color` as a circle.
 
 [faabul_link]: https://faabul.com

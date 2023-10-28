@@ -1,5 +1,10 @@
+/// Package that provides a simple color picker for Flutter
+///
+/// Call `showColorPickerDialog()` to show the color picker dialog and await the result.
+
 library faabul_color_picker;
 
+import 'package:faabul_color_conversion/faabul_color_conversion.dart';
 import 'package:flutter/material.dart';
 
 /// Shows a dialog with the color picker
@@ -255,12 +260,11 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
                     tooltip: widget.showColorTooltips ? colorShade.name : null,
                     onSelected: _handleSelected,
                     isSelected: selectedColorShade != null &&
-                        _FaabulColorUtilities.colorEquals(
+                        _Utilities.colorEquals(
                             colorShade.color, selectedColorShade.color),
                     size: widget.colorSampleSize,
                     selectedIcon: selectedColorShade == null ||
-                            _FaabulColorUtilities.colorEquals(
-                                colorShade.color, _selected!)
+                            _Utilities.colorEquals(colorShade.color, _selected!)
                         ? selectedIcon
                         : shadeSelectedIcon,
                   ),
@@ -285,7 +289,7 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
                       color: color,
                       onSelected: _handleSelected,
                       isSelected: _selected != null &&
-                          _FaabulColorUtilities.colorEquals(color, _selected!),
+                          _Utilities.colorEquals(color, _selected!),
                       selectedIcon: selectedIcon,
                     ),
                 ],
@@ -318,9 +322,7 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
 
   void _updateState(Color? color) {
     setState(() => _selected = color);
-    final webColor = color == null
-        ? null
-        : _FaabulColorUtilities.toWebColor(color).toUpperCase();
+    final webColor = color?.asWebColor().toUpperCase();
     _colorInputController.text = webColor ?? '';
   }
 
@@ -348,8 +350,7 @@ class _FaabulColorPickerState extends State<FaabulColorPicker> {
   }
 
   void _colorInputListener() {
-    final color =
-        _FaabulColorUtilities.tryParseAsColor(_colorInputController.text);
+    final color = _colorInputController.text.tryParseAsColor();
     if (color == null) {
       setState(() => _colorInputValid = false);
     } else {
@@ -465,50 +466,9 @@ class FaabulColorSample extends StatelessWidget {
   }
 }
 
-/// Utility functions for colors
-abstract class _FaabulColorUtilities {
-  static final colorParser =
-      RegExp(r"^#([0-9A-Fa-f]{6}([0-9A-Fa-f][0-9A-Fa-f])?)$");
-
+/// Utility functions
+abstract class _Utilities {
   static colorEquals(Color a, Color b) => a.value == b.value;
-
-  /// Parses a web color
-  ///
-  /// Accepted formats are `#FF0088FF` (with alpha) and `#0088FF` (without alpha), case insensitive
-  /// Throws [FormatException] on invalid format
-  /// See also [tryParseAsColor]
-  static Color parseAsColor(String text) {
-    final match = colorParser.firstMatch(text)?.group(1);
-    if (match == null) {
-      throw FormatException(
-          "Supplied color has invalid format. Expected '#FF0088FF' or '#0088FF'",
-          text);
-    }
-    return Color(int.parse("0x${match.length == 8 ? match : 'FF$match'}"));
-  }
-
-  /// Parses a web color
-  ///
-  /// Accepted formats are `#FF0088FF` (with alpha) and `#0088FF` (without alpha), case insensitive
-  /// Returns `null` on invalid format
-  /// See also [parseAsColor]
-  static Color? tryParseAsColor(String text) {
-    try {
-      return parseAsColor(text);
-    } on FormatException catch (_) {
-      return null;
-    }
-  }
-
-  /// Returns web string representation of [color], such as `#004488DD`
-  static String toWebColor(Color color) {
-    String alpha = color.alpha.toRadixString(16).padLeft(2, '0');
-    String red = color.red.toRadixString(16).padLeft(2, '0');
-    String green = color.green.toRadixString(16).padLeft(2, '0');
-    String blue = color.blue.toRadixString(16).padLeft(2, '0');
-
-    return '#$alpha$red$green$blue';
-  }
 }
 
 /// Holds a color and its shades
@@ -874,9 +834,9 @@ class FaabulColorShades {
 
   bool contains(Color? color) {
     if (color == null) return false;
-    if (_FaabulColorUtilities.colorEquals(color, this.color)) return true;
+    if (_Utilities.colorEquals(color, this.color)) return true;
     for (final shade in shades ?? []) {
-      if (_FaabulColorUtilities.colorEquals(color, shade)) return true;
+      if (_Utilities.colorEquals(color, shade)) return true;
     }
     return false;
   }

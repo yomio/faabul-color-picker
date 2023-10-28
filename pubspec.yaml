@@ -1,6 +1,6 @@
 name: faabul_color_picker
-description: A simple color picker with focus on user experience.
-version: 1.0.2
+description: A simple color picker with focus on good UX. Work with Material colors and parses custom colors in hex format.
+version: 1.1.0
 homepage: https://github.com/yomio/faabul_color_picker
 repository: https://github.com/yomio/faabul_color_picker.git
 issue_tracker: https://github.com/yomio/faabul_color_picker/issues
@@ -21,6 +21,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  faabul_color_conversion: ^1.0.0
 
 dev_dependencies:
   flutter_test:
